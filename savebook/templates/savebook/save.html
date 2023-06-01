@@ -1,0 +1,103 @@
+{% extends 'base.html' %}{% block content %}
+<div class="jumbotron jumbotron-lg jumbotron-fluid mb-0 pb-5 bg-warning position-relative">
+	<div class="container text-white h-100 tofront">
+		<div class="row align-items-center justify-content-center text-center">
+			<div class="col-md-10">
+				<h1 class="display-3" style="color: #343a3e; font-weight: 600">儲存繪本</h1>
+        <hr>
+        <h4 style="color: #343a3e; font-weight: 600">
+          恭喜你即將完成繪本囉！填寫下方資料儲存繪本。
+        </h4>
+			</div>
+		</div>
+	</div>
+</div>
+
+<form action="{% url 'save' book.id %}" method="post" class="needs-validation" novalidate>
+  <div class="container mt-10 mb-10" style="margin-top:5%;">
+    <div class="row">
+      <!--儲存設定-->
+      <div class="col-lg-6 col-sm-12">
+          <!--狀態列-->
+            {% if cover_page.image != none %}
+            <img
+              name="cover_page"
+              src="data:image/png;base64,{{cover_page.image}}"
+              class="img-fluid mb-10"
+              alt="..."
+            />
+            {% else %}
+            <img
+              src="https://dummyimage.com/540x540/999/fff.png&text=none"
+              class="mx-auto d-block img-fluid mb-10"
+              alt="..."
+              style="border-radius: 10px"
+            />
+            {% endif %}
+      </div>
+      <!--儲存設定-->
+
+      <!--作者資訊-->
+      <div class="col-lg-6 col-sm-12">
+        <div class="mb-3">
+          <label for="book_title" class="form-label">故事標題：</label>
+          <input
+            type="text"
+            class="form-control"
+            id="book_title"
+            name="book_title"
+            placeholder="輸入故事標題"
+            value="{{book.title}}"
+            required
+          />
+          <div class="invalid-feedback">請輸入故事標題</div>
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">大綱：</label>
+          <textarea
+            class="form-control"
+            id="description"
+            name="description"
+            placeholder="輸入故事大綱"
+            rows="10"
+            style="resize : none;"
+            required
+          >{{book.description}}</textarea>
+          <div class="invalid-feedback">請輸入大綱</div>
+        </div>
+        <label class="form-label">狀態：</label>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="public_status"
+            id="open"
+            value="public"
+          />
+          <label class="form-check-label" for="open"> 公開 </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="public_status"
+            id="private"
+            value="private"
+            checked
+          />
+          <label class="form-check-label" for="private"> 私密 </label>
+        </div>
+
+        <p>頁數：{{pages}}頁</p>
+
+        <div class="d-grid gap-2">
+          <button class="btn btn-success btn-round btn-block shadow-sm mt-10" type="submit">儲存</button>
+        </div>
+
+      </div>
+      <!--作者資訊-->
+    </div>
+  </div>
+</form>
+
+{% endblock%}
